@@ -21,8 +21,8 @@ if [ -z ${COMPANY_CERTIFICATE_FOLDER+COMPANY_CERTIFICATE_FOLDER} ]; then
         -it \
         -w "/uv-ansible-example/uv-ansible-example" \
         --env-file "${SOURCE_DIR}/.env" \
-        -e SSH_AUTH_SOCK="${SSH_AUTH_SOCK}" \
-        --mount type=bind,source="${SSH_AUTH_SOCK}",destination="${SSH_AUTH_SOCK}",readonly \
+        -e SSH_AUTH_SOCK="/ssh-agent/$(basename "${SSH_AUTH_SOCK}")" \
+        -v "$(dirname "${SSH_AUTH_SOCK}"):/ssh-agent" \
         --mount type=bind,source="${SOURCE_DIR}/uv-ansible-example",destination="/uv-ansible-example/uv-ansible-example" \
         uv-ansible-example \
         bash
